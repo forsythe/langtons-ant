@@ -1,6 +1,6 @@
 ### Summary
 
-Ants that demonstrate emergent behavior based on simples rules. ![demo](https://i.gyazo.com/dd5e0a61b4ec7a990224a3e819c5e987.gif)
+Ants that demonstrate emergent behavior based on simple rules. ![demo](https://i.gyazo.com/dd5e0a61b4ec7a990224a3e819c5e987.gif)
 
 ### How it works
 
