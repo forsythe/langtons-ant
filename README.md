@@ -10,7 +10,7 @@ Two rules govern how each ant moves:
 When the ant leaves a grid, the color of the grid it left is inverted.    
 
 ### Customizable options  
-`delay`: milliseconds between each ant move
-`randDir`: whether or not to initialize ants with a random direction
-`cellSize`: size of each grid in pixels
+`delay`: milliseconds between each ant move  
+`randDir`: whether or not to initialize ants with a random direction  
+`cellSize`: size of each grid in pixels  
 
