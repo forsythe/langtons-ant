@@ -1,6 +1,5 @@
 class Ant {
   public int r, c, angle; //angle in degrees
-
   int max_rows, max_cols;
 
   Ant(int r_rhs, int c_rhs, int angle_rhs, int num_rows, int num_cols) {
@@ -14,9 +13,10 @@ class Ant {
   void move(boolean cur_cell) {
     angle += cur_cell? 90 : -90;
 
-    while (angle < 0) { 
+    while (angle < 0) {
       angle += 360;
     }
+
     angle %= 360;
 
     switch(angle) {
@@ -39,9 +39,4 @@ class Ant {
     r %= max_rows;
     c %= max_cols;
   }
-
-  void update() {
-    print(angle, "\n");
-  }
-
 }

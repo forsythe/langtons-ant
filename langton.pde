@@ -1,8 +1,11 @@
+//OPTIONS
+int delay = 0; //frames between each tick
+boolean randDir = true; //should ants have random direction?
+
 boolean[][] cells; //the actual cell, and the holding cell
-int cellSize = 10; //size of each square in pixels
+int cellSize = 5; //size of each square in pixels
 int numSquaresPerRow, numSquaresPerColumn;
 
-int delay = 0; //frames between each tick
 int lastRecordedTime = 0;
 boolean pause = false;
 
@@ -11,8 +14,7 @@ color empty = color(0);
 color antColor = color(255, 0, 0);
 
 ArrayList<Ant> ants = new ArrayList<Ant>();
-boolean randDir = false; //should ants have random direction?
-//known "bugs" (hue): clicking on the same spot multiple times while paused will stack ants
+//known "bugs" huehuheueuh: clicking on the same spot multiple times while paused will stack ants
 
 PFont f;   
 
@@ -26,8 +28,6 @@ void setup() {
   numSquaresPerRow = height/cellSize;
   numSquaresPerColumn = width/cellSize;
   cells = new boolean[numSquaresPerRow][numSquaresPerColumn];
-
-  //stroke(255, 255, 255);
 
   fill(empty);
   stroke(empty);
@@ -57,8 +57,7 @@ void mouseClicked() {
   int mouseCol = int(map(mouseX, 0, width, 0, numSquaresPerColumn)); 
 
   ants.add(new Ant(mouseRow, mouseCol, randDir? int(random(4))*90 : 0, numSquaresPerRow, numSquaresPerColumn));
-  fill(antColor);
-  rect(ants.get(ants.size()-1).c*cellSize, ants.get(ants.size()-1).r*cellSize, cellSize, cellSize);
+  drawAnt(ants.get(ants.size()-1));
 }
 
 void iteration() {
@@ -94,16 +93,17 @@ void keyPressed() {
   if (key == ' ') {
     pause = !pause;
 
-    //redraw to cover "paused" text
-    for (int r=0; r<numSquaresPerRow; r++) {
-      for (int c=0; c<numSquaresPerColumn; c++) {
-        fill(cells[r][c]? taken : empty);
-        rect(c*cellSize, r*cellSize, cellSize, cellSize);
+    if (!pause) {     //redraw to erase "paused" text
+      for (int r=0; r<numSquaresPerRow; r++) {
+        for (int c=0; c<numSquaresPerColumn; c++) {
+          fill(cells[r][c]? taken : empty);
+          rect(c*cellSize, r*cellSize, cellSize, cellSize);
+        }
       }
-    }
 
-    for (Ant a : ants) {
-      drawAnt(a);
+      for (Ant a : ants) {
+        drawAnt(a);
+      }
     }
   }
 }
