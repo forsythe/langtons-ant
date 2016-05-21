@@ -6,6 +6,8 @@ boolean[][] cells; //the actual cell, and the holding cell
 int cellSize = 5; //size of each square in pixels
 int numSquaresPerRow, numSquaresPerColumn;
 
+int step = 0;
+
 int lastRecordedTime = 0;
 boolean pause = false;
 
@@ -21,7 +23,7 @@ PFont f;
 void setup() {
   size(1500, 800);
 
-  f = createFont("Arial", 50, true);
+  f = createFont("Arial", 30, true);
   textFont(f);
   textAlign(TOP);            
 
@@ -33,11 +35,7 @@ void setup() {
   stroke(empty);
   rect(0, 0, width, height);
 
-  for (int r = 0; r < numSquaresPerRow; r++) {
-    for (int c = 0; c < numSquaresPerColumn; c++) {
-      cells[r][c] = false;
-    }
-  }
+  clearGrid();
 }
 
 void draw() { 
@@ -47,8 +45,15 @@ void draw() {
       lastRecordedTime = millis();
     }
   } else {
-    fill(antColor);
-    text("Paused", 25, 50);
+    redrawGrid();
+
+    for (Ant a : ants) {
+      drawAnt(a);
+    }
+
+    fill(taken);
+    text("Paused", 15, 30);
+    text("Step: " + step, 15, 60);
   }
 }
 
@@ -61,6 +66,9 @@ void mouseClicked() {
 }
 
 void iteration() {
+  if (ants.size() == 0)
+    return;
+
   for (Ant a : ants) {
     //color the cell from which the ant has left
     cells[a.r][a.c] = !cells[a.r][a.c];
@@ -70,6 +78,8 @@ void iteration() {
     a.move(cells[a.r][a.c]);
     drawAnt(a);
   }
+
+  step++;
 }
 
 void drawAnt(Ant a) {
@@ -78,32 +88,40 @@ void drawAnt(Ant a) {
 }
 
 void keyPressed() {
-  if (key == 'r' || key == 'R') { //basically copied the code from the draw
-    for (int r=0; r<numSquaresPerRow; r++) 
-      for (int c=0; c<numSquaresPerColumn; c++) 
-        cells[r][c] = false; // Save state of each cell
-
+  if (key == 'r' || key == 'R') {
+    clearGrid();
     ants.clear();
 
     fill(empty);
     stroke(empty);
     rect(0, 0, width, height);
+
+    step = 0;
   }
 
   if (key == ' ') {
     pause = !pause;
 
     if (!pause) {     //redraw to erase "paused" text
-      for (int r=0; r<numSquaresPerRow; r++) {
-        for (int c=0; c<numSquaresPerColumn; c++) {
-          fill(cells[r][c]? taken : empty);
-          rect(c*cellSize, r*cellSize, cellSize, cellSize);
-        }
-      }
-
+      redrawGrid();
       for (Ant a : ants) {
         drawAnt(a);
       }
     }
   }
+}
+
+void redrawGrid() {
+  for (int r=0; r<numSquaresPerRow; r++) {
+    for (int c=0; c<numSquaresPerColumn; c++) {
+      fill(cells[r][c]? taken : empty);
+      rect(c*cellSize, r*cellSize, cellSize, cellSize);
+    }
+  }
+}
+
+void clearGrid() {
+  for (int r=0; r<numSquaresPerRow; r++) 
+    for (int c=0; c<numSquaresPerColumn; c++) 
+      cells[r][c] = false;
 }
