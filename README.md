@@ -15,6 +15,6 @@ When the ant leaves a grid, the color of the grid it left is inverted.
 `cellSize`: Size of each grid in pixels  
 
 ### Controls  
-`Click`: Add ant
+`Click`: Add ant  
 `Spacebar`: Toggle pause (also displays step number)  
 `R`: Reset
