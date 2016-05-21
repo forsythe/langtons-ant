@@ -3,7 +3,7 @@ int delay = 0; //frames between each tick
 boolean randDir = true; //should ants have random direction?
 
 boolean[][] cells; //the actual cell, and the holding cell
-int cellSize = 5; //size of each square in pixels
+int cellSize = 3; //size of each square in pixels
 int numSquaresPerRow, numSquaresPerColumn;
 
 int steps = 0;
@@ -21,7 +21,7 @@ ArrayList<Ant> ants = new ArrayList<Ant>();
 PFont f, fsmall;
 
 void setup() {
-  size(1500, 800);
+  size(1800, 900);
 
   f = createFont("Arial", 30, true);
   fsmall = createFont("Arial", 20, true);
@@ -118,10 +118,13 @@ void keyPressed() {
 }
 
 void redrawGrid() {
+  fill(empty);
+  rect(0, 0, width, height);
+  fill(taken);
   for (int r=0; r<numSquaresPerRow; r++) {
     for (int c=0; c<numSquaresPerColumn; c++) {
-      fill(cells[r][c]? taken : empty);
-      rect(c*cellSize, r*cellSize, cellSize, cellSize);
+      if (cells[r][c])
+        rect(c*cellSize, r*cellSize, cellSize, cellSize);
     }
   }
 }
