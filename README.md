@@ -14,3 +14,6 @@ When the ant leaves a grid, the color of the grid it left is inverted.
 `randDir`: Whether or not to initialize ants with a random direction  
 `cellSize`: Size of each grid in pixels  
 
+### Controls  
+`Spacebar`: Toggle pause (also displays step number)  
+`R`: Reset
