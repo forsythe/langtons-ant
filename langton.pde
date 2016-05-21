@@ -6,10 +6,10 @@ boolean[][] cells; //the actual cell, and the holding cell
 int cellSize = 5; //size of each square in pixels
 int numSquaresPerRow, numSquaresPerColumn;
 
-int step = 0;
+int steps = 0;
 
 int lastRecordedTime = 0;
-boolean pause = false;
+boolean pause = true;
 
 color taken = color(255, 255, 255);
 color empty = color(0);
@@ -18,13 +18,13 @@ color antColor = color(255, 0, 0);
 ArrayList<Ant> ants = new ArrayList<Ant>();
 //known "bugs" huehuheueuh: clicking on the same spot multiple times while paused will stack ants
 
-PFont f;   
+PFont f, fsmall;
 
 void setup() {
   size(1500, 800);
 
   f = createFont("Arial", 30, true);
-  textFont(f);
+  fsmall = createFont("Arial", 20, true);
   textAlign(TOP);            
 
   numSquaresPerRow = height/cellSize;
@@ -52,8 +52,14 @@ void draw() {
     }
 
     fill(taken);
+    textFont(f);
     text("Paused", 15, 30);
-    text("Step: " + step, 15, 60);
+    text("Step: " + steps, 15, 60);
+
+    textFont(fsmall);
+    text("Reset [R]", 15, 120);
+    text("Pause/unpause [SPACE]", 15, 140);
+    text("Spawn ant [Mouse]", 15, 160);
   }
 }
 
@@ -79,7 +85,7 @@ void iteration() {
     drawAnt(a);
   }
 
-  step++;
+  steps++;
 }
 
 void drawAnt(Ant a) {
@@ -96,7 +102,7 @@ void keyPressed() {
     stroke(empty);
     rect(0, 0, width, height);
 
-    step = 0;
+    steps = 0;
   }
 
   if (key == ' ') {
